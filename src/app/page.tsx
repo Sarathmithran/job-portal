@@ -3,6 +3,7 @@ import Hero from "@/components/home/Hero";
 import SearchBar from "@/components/home/SearchBar";
 import Statistics from "@/components/home/Statistics";
 import CompanyLogos from "@/components/home/CompanyLogos";
+import RecentJobs from "@/components/home/RecentJobs";
 
 export default async function Home() {
 
@@ -19,6 +20,7 @@ export default async function Home() {
           <Statistics />
         </main>
       </div>
+      <RecentJobs />
       <CompanyLogos />
     </>
   );

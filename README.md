@@ -13,6 +13,7 @@ pnpm dev
 # or
 bun dev
 ```
+Figma : https://www.figma.com/design/cdz6OKHCJypm1ff8TlvYWZ/Job-Portal-Figma-Template--Community-?node-id=25-5975&t=aoHs7YaDwfYFPmPm-0
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

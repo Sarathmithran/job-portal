@@ -99,7 +99,7 @@ const Jobs: React.FC = () => {
   ];
   
   return (
-    <div className="w-full bg-white">
+    <div className="w-full bg-gray-50">
       {/* Header */}
       <CommonHeader />
       <main className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-[72px] py-12 sm:py-16 lg:py-[60px]">
