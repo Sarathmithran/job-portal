@@ -1,17 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { Job } from "@/types/job";
-import { getRecentJobs } from "./jobsThunk";
+import { getJobs, getRecentJobs } from "./jobsThunk";
 
 interface JobsState {
-  jobs: Job | null;
-  recentJobs: Job | null;
+  jobs: Job[];
+  recentJobs: Job[];
+  total: number;
+  page: number;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: JobsState = {
-  jobs: null,
-  recentJobs: null,
+  jobs: [],
+  recentJobs: [],
+  total: 0,
+  page: 1,
   loading: false,
   error: null,
 };
@@ -31,6 +35,20 @@ const jobsSlice = createSlice({
         state.recentJobs = action.payload;
       })
       .addCase(getRecentJobs.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+
+      .addCase(getJobs.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getJobs.fulfilled, (state, action) => {
+        state.loading = false;
+        state.jobs = action.payload.jobs;
+        state.total = action.payload.total;
+        state.page = action.payload.page;
+      })
+      .addCase(getJobs.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

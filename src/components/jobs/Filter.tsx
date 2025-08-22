@@ -6,9 +6,11 @@ import Button from "../ui/Button";
 import Dropdown from "../ui/Dropdown";
 import EditText from "../ui/EditText";
 import HiringBanner from "./HiringBanner";
+import { useSearchParams } from "next/navigation";
 
 const Filter = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const searchParams = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("what"));
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedJobTypes, setSelectedJobTypes] = useState<string[]>([]);
@@ -103,7 +105,7 @@ const Filter = () => {
           </h3>
           <EditText
             placeholder="Job title or company"
-            value={searchQuery}
+            value={searchQuery ?? ""}
             onChange={setSearchQuery}
             leftIcon="/images/img_search_gray_600.svg"
             className="w-full"

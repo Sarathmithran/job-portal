@@ -13,13 +13,12 @@ export default function SearchBar() {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
   const locationOptions = [
-    { value: "new-york", label: "New York" },
-    { value: "london", label: "London" }
+    { value: "gb", label: "Great Britan" },
+    { value: "in", label: "India" }
   ];
 
   const categoryOptions = [
-    { value: "tech", label: "Technology" },
-    { value: "finance", label: "Finance" }
+    { value: "tech", label: "Technology" }
   ];
 
 interface Option {

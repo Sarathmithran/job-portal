@@ -40,7 +40,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   };
 
   const variants = {
-    default: 'bg-white border border-border-primary hover:border-primary-background focus:border-primary-background focus:ring-2 focus:ring-primary-background focus:ring-opacity-20',
+    default: 'bg-white text-gray-500 hover:border-primary-background focus:border-primary-background focus:ring-2 focus:ring-primary-background focus:ring-opacity-20',
     outline: 'bg-transparent border-2 border-border-primary hover:border-primary-background focus:border-primary-background',
     filled: 'bg-secondary-light border border-transparent hover:bg-secondary-background focus:bg-white focus:border-primary-background'
   };
@@ -136,6 +136,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                   focus:outline-none
                   transition-colors
                   duration-150
+                  text-gray-500
                   ${selectedValue === option.value ? 'bg-primary-background text-primary-foreground' : 'text-secondary-foreground'}
                 `.trim().replace(/\s+/g, ' ')}
                 role="option"

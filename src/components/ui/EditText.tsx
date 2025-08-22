@@ -56,7 +56,7 @@ const EditText = forwardRef<HTMLInputElement, EditTextProps>(({
   };
 
   const variants = {
-    default: 'bg-white border border-border-primary hover:border-primary-background focus:border-primary-background focus:ring-2 focus:ring-primary-background focus:ring-opacity-20',
+    default: 'text-gray-500 bg-white hover:border-primary-background focus:border-primary-background focus:ring-2 focus:ring-primary-background focus:ring-opacity-20',
     outline: 'bg-transparent border-2 border-border-primary hover:border-primary-background focus:border-primary-background',
     filled: 'bg-secondary-light border border-transparent hover:bg-secondary-background focus:bg-white focus:border-primary-background'
   };
