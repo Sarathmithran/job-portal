@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import Button from "../ui/Button";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function SearchBar() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const router = useRouter();
+  const [keyword, setKeyword] = useState("");
+  const [location, setLocation] = useState("");
+  const [category, setCategory] = useState("");
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
@@ -26,22 +28,23 @@ interface Option {
 }
 
 const handleLocationSelect = (option: Option): void => {
-    setSelectedLocation(option.label);
+    setLocation(option.label);
     setIsLocationOpen(false);
 };
 
   const handleCategorySelect = (option: Option): void => {
-    setSelectedCategory(option.label);
+    setCategory(option.label);
     setIsCategoryOpen(false);
   };
 
-//   const handleSearch = () => {
-//     console.log("Search clicked:", {
-//       query: searchQuery,
-//       location: selectedLocation,
-//       category: selectedCategory
-//     });
-//   };
+  const handleSearch = () => {
+    const query = new URLSearchParams({
+      ...(keyword && { what: keyword }),
+      ...(location && { where: location }),
+      ...(category && { category }),
+    });
+    router.push(`/jobs?${query.toString()}`);
+  };
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-[46px]">
@@ -52,8 +55,8 @@ const handleLocationSelect = (option: Option): void => {
             <input
               type="text"
               placeholder="Search.."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
               className="w-full text-sm sm:text-base lg:text-[16px] font-medium text-[#0000007f] placeholder-[#0000007f] border-none outline-none bg-transparent"
             />
           </div>
@@ -67,7 +70,7 @@ const handleLocationSelect = (option: Option): void => {
               }}
               className="flex items-center justify-between w-full px-6 py-4 text-sm sm:text-base lg:text-[16px] font-medium text-[#0000007f] hover:bg-gray-50 transition-colors duration-200 min-w-[180px]"
             >
-              <span>{selectedLocation || "Select Location"}</span>
+              <span>{location || "Select Location"}</span>
               <svg 
                 className={`w-4 h-4 ml-2 transition-transform duration-200 ${
                   isLocationOpen ? "rotate-180" : ""
@@ -104,7 +107,7 @@ const handleLocationSelect = (option: Option): void => {
               }}
               className="flex items-center justify-between w-full px-6 py-4 text-sm sm:text-base lg:text-[16px] font-medium text-[#0000007f] hover:bg-gray-50 transition-colors duration-200 min-w-[180px]"
             >
-              <span>{selectedCategory || "Select Category"}</span>
+              <span>{category || "Select Category"}</span>
               <svg 
                 className={`w-4 h-4 ml-2 transition-transform duration-200 ${
                   isCategoryOpen ? "rotate-180" : ""
@@ -133,6 +136,7 @@ const handleLocationSelect = (option: Option): void => {
           </div>
           <Button     
             className="w-full lg:w-auto bg-[#309689] hover:bg-[#267a6f] text-white font-figtree font-semibold text-base sm:text-lg lg:text-[18px] leading-5 sm:leading-6 lg:leading-[22px] px-6 sm:px-8 lg:px-[54px] py-6 sm:py-7 lg:py-[28px] rounded-lg lg:rounded-l-none mt-4 lg:mt-0 flex items-center justify-center gap-2 lg:gap-[10px] min-h-[60px] lg:min-h-[76px]"
+            onClick={handleSearch}
             >
                 <Image
                 src="/images/img_search.svg"
