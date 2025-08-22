@@ -1,42 +1,21 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
 import Card from '../jobs/Card';
-interface Job {
-  id: string;
-  title: string;
-  company: string;
-  logo: string;
-  category: string;
-  type: string;
-  salary: string;
-  location: string;
-  timeAgo: string;
-}
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '@/store/store';
+import { RootState } from '@/store/store';
+import { getRecentJobs } from '@/store/jobs/jobsThunk';
 
 const RecentJobs = () => {
 
-    const jobs: Job[] = [
-    {
-      id: '1',
-      title: 'Forward Security Director',
-      company: 'Bauch, Schuppe and Schulist Co',
-      logo: '/images/img_logo_40x40.png',
-      category: 'Hotels & Tourism',
-      type: 'Full time',
-      salary: '$40000-$42000',
-      location: 'New-York, USA',
-      timeAgo: '10 min ago'
-    },
-    {
-      id: '2',
-      title: 'Regional Creative Facilitator',
-      company: 'Wisozk - Becker Co',
-      logo: '/images/img_logo_1.png',
-      category: 'Media',
-      type: 'Part time',
-      salary: '$28000-$32000',
-      location: 'Los- Angeles, USA',
-      timeAgo: '12 min ago'
-    }]
+  const dispatch = useDispatch<AppDispatch>();
+  const { recentJobs } = useSelector(
+    (state: RootState) => state.jobs
+  );
+
+  useEffect(() => {
+    dispatch(getRecentJobs());
+  }, [dispatch]);
 
   return (
     <div className="py-10 px-4 sm:px-8 lg:px-16 bg-gray-50">
@@ -49,9 +28,9 @@ const RecentJobs = () => {
           </p>
         </div>
         <div className="space-y-6 lg:space-y-[24px] mb-8 lg:mb-[40px]">
-            {jobs?.map((job) => (
+            {Array.isArray(recentJobs) && recentJobs.map((job) => (
                 <Card key={job?.id} job={job}/>
-            ))}
+            ))}        
         </div>
     </div>
   )

@@ -1,18 +1,7 @@
 import React from "react";
 import Button from "../ui/Button";
 import Image from "next/image";
-
-interface Job {
-  id: string;
-  title: string;
-  company: string;
-  logo: string;
-  category: string;
-  type: string;
-  salary: string;
-  location: string;
-  timeAgo: string;
-}
+import { Job } from "@/types/job";
 
 const Card = ({ job }: { job: Job }) => {
   return (
@@ -24,8 +13,8 @@ const Card = ({ job }: { job: Job }) => {
       <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4 lg:mb-[16px]">
         <div className="flex items-center gap-4 lg:gap-[20px] flex-1">
           <Image
-            src={job?.logo}
-            alt={`${job?.company} logo`}
+            src={job?.logo ?? "/images/img_logo_1.png"}
+            alt={job?.company?.display_name}
             width={40}
             height={40}
             className="w-8 h-8 sm:w-10 sm:h-10 lg:w-[40px] lg:h-[40px] object-contain flex-shrink-0"
@@ -35,7 +24,7 @@ const Card = ({ job }: { job: Job }) => {
               {job?.title}
             </h3>
             <p className="text-sm sm:text-base lg:text-[16px] font-figtree font-normal leading-4 sm:leading-5 text-black">
-              {job?.company}
+              {job?.company?.display_name}
             </p>
           </div>
         </div>
@@ -64,7 +53,7 @@ const Card = ({ job }: { job: Job }) => {
               className="w-5 h-5 sm:w-6 sm:h-6 lg:w-[24px] lg:h-[24px]"
             />
             <span className="text-sm sm:text-base lg:text-[16px] font-figtree font-semibold leading-4 sm:leading-5 text-[#6c757d]">
-              {job?.category}
+              {job?.category?.label || "Other"}
             </span>
           </div>
           <div className="flex items-center gap-2 sm:gap-3 lg:gap-[12px]">
@@ -76,7 +65,7 @@ const Card = ({ job }: { job: Job }) => {
               className="w-5 h-5 sm:w-6 sm:h-6 lg:w-[24px] lg:h-[24px]"
             />
             <span className="text-sm sm:text-base lg:text-[16px] font-figtree font-semibold leading-4 sm:leading-5 text-[#6c757d]">
-              {job?.type}
+              {job?.contract_time || "Not specified"}
             </span>
           </div>
           <div className="flex items-center gap-2 sm:gap-3 lg:gap-[12px]">
@@ -88,7 +77,7 @@ const Card = ({ job }: { job: Job }) => {
               className="w-5 h-5 sm:w-6 sm:h-6 lg:w-[24px] lg:h-[24px]"
             />
             <span className="text-sm sm:text-base lg:text-[16px] font-figtree font-semibold leading-4 sm:leading-5 text-[#6c757d]">
-              {job?.salary}
+              {job?.salary_min ? `${job.salary_min} - ${job.salary_max}` : "Not specified"}
             </span>
           </div>
           <div className="flex items-center gap-2 sm:gap-3 lg:gap-[12px]">
@@ -100,7 +89,7 @@ const Card = ({ job }: { job: Job }) => {
               className="w-5 h-5 sm:w-6 sm:h-6 lg:w-[24px] lg:h-[24px]"
             />
             <span className="text-sm sm:text-base lg:text-[16px] font-figtree font-semibold leading-4 sm:leading-5 text-[#6c757d]">
-              {job?.location}
+              {job?.location?.display_name || "Unknown"}
             </span>
           </div>
         </div>
