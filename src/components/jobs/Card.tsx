@@ -14,7 +14,7 @@ const Card = ({ job }: { job: Job }) => {
         <div className="flex items-center gap-4 lg:gap-[20px] flex-1">
           <Image
             src={job?.logo ?? "/images/img_logo_1.png"}
-            alt={job?.company?.display_name}
+            alt={job?.company?.display_name || "company name"}
             width={40}
             height={40}
             className="w-8 h-8 sm:w-10 sm:h-10 lg:w-[40px] lg:h-[40px] object-contain flex-shrink-0"

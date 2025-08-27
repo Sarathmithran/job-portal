@@ -53,7 +53,7 @@ const Jobs: React.FC = () => {
       <CommonHeader />
       <main className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-[72px] py-12 sm:py-16 lg:py-[60px]">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-[16px]">
-            <Filter />
+          <Filter />
           <div className="w-full lg:w-[76%]">
             {/* Results Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 lg:mb-[40px]">

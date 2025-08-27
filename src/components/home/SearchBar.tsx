@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Button from "../ui/Button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { categories } from "@/data/categories";
+import { locationOptions } from "@/data/locations";
 
 interface Option {
     value: string;
@@ -17,22 +19,10 @@ export default function SearchBar() {
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
-  const locationOptions = [
-    { value: "Goa", label: "Goa" },
-    { value: "Mumbai", label: "Mumbai" },
-    { value: "Bangalore", label: "Bangalore" },
-    { value: "Pune", label: "Pune" }
-  ];
-
-  const categoryOptions = [
-    { value: "it-jobs", label: "IT Jobs" },
-    { value: "finance-jobs", label: "Finance Jobs" }
-  ];
-
-const handleLocationSelect = (option: Option): void => {
-    setLocation(option.label);
-    setIsLocationOpen(false);
-};
+  const handleLocationSelect = (option: Option): void => {
+      setLocation(option.label);
+      setIsLocationOpen(false);
+  };
 
   const handleCategorySelect = (option: Option): void => {
     setCategory(option);
@@ -40,6 +30,7 @@ const handleLocationSelect = (option: Option): void => {
   };
 
   const handleSearch = () => {
+    if(!keyword) return;
     const query = new URLSearchParams({
       ...(keyword && { what: keyword }),
       ...(location && { where: location }),
@@ -86,7 +77,7 @@ const handleLocationSelect = (option: Option): void => {
             </button>
             
             {isLocationOpen && (
-              <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-20 mt-1">
+              <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-20 mt-1 h-[300px] overflow-y-auto">
                 {locationOptions.map((option) => (
                   <button
                     key={option.value}
@@ -123,8 +114,8 @@ const handleLocationSelect = (option: Option): void => {
             </button>
             
             {isCategoryOpen && (
-              <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-20 mt-1">
-                {categoryOptions.map((option) => (
+              <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-20 mt-1 h-[300px] overflow-y-auto">
+                {categories?.map((option) => (
                   <button
                     key={option.value}
                     onClick={() => handleCategorySelect(option)}

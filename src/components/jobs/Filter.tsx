@@ -1,29 +1,17 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-import SeekBar from "../ui/SeekBar";
-import Button from "../ui/Button";
 import Dropdown from "../ui/Dropdown";
 import EditText from "../ui/EditText";
 import HiringBanner from "./HiringBanner";
 import { useQueryParams } from "@/utils/useQueryParams";
+import Button from "../ui/Button";
+import { categories } from "@/data/categories";
+import { locationOptions } from "@/data/locations";
 
 const Filter = () => {
   const { getParam, setParam } = useQueryParams();
   const [searchQuery, setSearchQuery] = useState(getParam("what"));
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-
-  const locationOptions = [
-    { value: "Goa", label: "Goa" },
-    { value: "Mumbai", label: "Mumbai" },
-    { value: "Bangalore", label: "Bangalore" },
-    { value: "Pune", label: "Pune" }
-  ];
-
-  const categories = [
-    { value: "it-jobs", label: "IT Jobs" },
-    { value: "finance-jobs", label: "Finance Jobs" }
-  ];
 
   // get current location & category
   const location = getParam("where") || '';
@@ -41,9 +29,15 @@ const Filter = () => {
             placeholder="Job title or company"
             value={searchQuery ?? ""}
             onChange={setSearchQuery}
-            leftIcon="/images/img_search_gray_600.svg"
+            // rightIcon="/images/img_search_gray_600.svg"
             className="w-full"
           />
+          <Button
+            onClick={() => setParam("what", searchQuery ?? "")}
+            className="w-full mt-2 py-2 sm:py-2.5 lg:py-[8px] text-sm sm:text-base lg:text-[16px] font-figtree font-semibold leading-4 sm:leading-5 text-white bg-[#309589] hover:bg-[#267a6f] rounded-lg transition-all duration-200"
+          >
+            Search
+          </Button>
         </div>
         {/* Location */}
         <div className="mb-6 lg:mb-[18px]">

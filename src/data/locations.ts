@@ -1,0 +1,22 @@
+export const locationOptions = [
+  { value: "Mumbai", label: "Mumbai" },
+  { value: "Delhi", label: "Delhi" },
+  { value: "Bangalore", label: "Bangalore" },
+  { value: "Hyderabad", label: "Hyderabad" },
+  { value: "Chennai", label: "Chennai" },
+  { value: "Pune", label: "Pune" },
+  { value: "Kolkata", label: "Kolkata" },
+  { value: "Ahmedabad", label: "Ahmedabad" },
+  { value: "Goa", label: "Goa" },
+  { value: "Jaipur", label: "Jaipur" },
+  { value: "Chandigarh", label: "Chandigarh" },
+  { value: "Lucknow", label: "Lucknow" },
+  { value: "Indore", label: "Indore" },
+  { value: "Kochi", label: "Kochi" },
+  { value: "Nagpur", label: "Nagpur" },
+  { value: "Bhubaneswar", label: "Bhubaneswar" },
+  { value: "Surat", label: "Surat" },
+  { value: "Visakhapatnam", label: "Visakhapatnam" },
+  { value: "Patna", label: "Patna" },
+  { value: "Thiruvananthapuram", label: "Thiruvananthapuram" }
+];
