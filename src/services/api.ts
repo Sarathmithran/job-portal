@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = "https://api.adzuna.com/v1/api/jobs";
+const API_BASE = "https://api.adzuna.com/v1/api/jobs/in";
 
 const APP_ID = process.env.NEXT_PUBLIC_ADZUNA_APP_ID!;
 const APP_KEY = process.env.NEXT_PUBLIC_ADZUNA_APP_KEY!;

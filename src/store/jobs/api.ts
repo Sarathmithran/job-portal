@@ -14,7 +14,7 @@ export const fetchJobs = (params: {
   salary_min?: number;
   full_time?: boolean;
 }) =>
-  axiosInstance.get(`/${params.country || "in"}/search/${params.page || 1}`, {
+  axiosInstance.get(`/search/${params.page || 1}`, {
     params: {
       results_per_page: 10,
       what: params.what,

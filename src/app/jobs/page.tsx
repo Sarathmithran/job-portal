@@ -36,6 +36,11 @@ const Jobs: React.FC = () => {
 
     dispatch(getJobs(filters));
   }, [searchParams, dispatch]);
+
+  const sortOptions = [
+    { value: 'date', label: 'Sort by latest' },
+    { value: 'salary', label: 'Sort by salary' },
+  ];
   
   // Calculate showing text
   const itemsPerPage = 10; 
@@ -57,6 +62,7 @@ const Jobs: React.FC = () => {
               </p>
               <div className="w-full sm:w-auto min-w-[200px]">
                 <Dropdown
+                options={sortOptions}
                 value={sort}
                 onChange={(val) => setParam("sort_by", val)}
                   rightIcon={

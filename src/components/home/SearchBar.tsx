@@ -4,27 +4,30 @@ import Button from "../ui/Button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-export default function SearchBar() {
-  const router = useRouter();
-  const [keyword, setKeyword] = useState("");
-  const [location, setLocation] = useState("");
-  const [category, setCategory] = useState("");
-  const [isLocationOpen, setIsLocationOpen] = useState(false);
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-
-  const locationOptions = [
-    { value: "gb", label: "Great Britan" },
-    { value: "in", label: "India" }
-  ];
-
-  const categoryOptions = [
-    { value: "tech", label: "Technology" }
-  ];
-
 interface Option {
     value: string;
     label: string;
 }
+
+export default function SearchBar() {
+  const router = useRouter();
+  const [keyword, setKeyword] = useState("");
+  const [location, setLocation] = useState("");
+  const [category, setCategory] = useState<Option | null>(null);
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+
+  const locationOptions = [
+    { value: "Goa", label: "Goa" },
+    { value: "Mumbai", label: "Mumbai" },
+    { value: "Bangalore", label: "Bangalore" },
+    { value: "Pune", label: "Pune" }
+  ];
+
+  const categoryOptions = [
+    { value: "it-jobs", label: "IT Jobs" },
+    { value: "finance-jobs", label: "Finance Jobs" }
+  ];
 
 const handleLocationSelect = (option: Option): void => {
     setLocation(option.label);
@@ -32,7 +35,7 @@ const handleLocationSelect = (option: Option): void => {
 };
 
   const handleCategorySelect = (option: Option): void => {
-    setCategory(option.label);
+    setCategory(option);
     setIsCategoryOpen(false);
   };
 
@@ -40,7 +43,7 @@ const handleLocationSelect = (option: Option): void => {
     const query = new URLSearchParams({
       ...(keyword && { what: keyword }),
       ...(location && { where: location }),
-      ...(category && { category }),
+      ...(category && { category: category.value }),
     });
     router.push(`/jobs?${query.toString()}`);
   };
@@ -106,7 +109,7 @@ const handleLocationSelect = (option: Option): void => {
               }}
               className="flex items-center justify-between w-full px-6 py-4 text-sm sm:text-base lg:text-[16px] font-medium text-[#0000007f] hover:bg-gray-50 transition-colors duration-200 min-w-[180px]"
             >
-              <span>{category || "Select Category"}</span>
+              <span>{category?.label || "Select Category"}</span>
               <svg 
                 className={`w-4 h-4 ml-2 transition-transform duration-200 ${
                   isCategoryOpen ? "rotate-180" : ""
