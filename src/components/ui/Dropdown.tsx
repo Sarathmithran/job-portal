@@ -1,37 +1,35 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 
-interface DropdownOption {
-  value: string;
-  label: string;
-}
-
 interface DropdownProps {
-  options: DropdownOption[];
   placeholder?: string;
-  value?: string;
-  onChange?: (value: string) => void;
   disabled?: boolean;
   className?: string;
   rightIcon?: React.ReactNode;
   size?: 'sm' | 'md' | 'lg';
   variant?: 'default' | 'outline' | 'filled';
+  value?: string; 
+  onChange?: (value: string) => void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
-  options = [],
   placeholder = 'Select an option',
-  value,
-  onChange,
   disabled = false,
   className = '',
   rightIcon,
   size = 'md',
-  variant = 'default'
+  variant = 'default',
+  value,
+  onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(value || '');
+  const [selectedValue, setSelectedValue] = useState(value || "");
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const sortOptions = [
+    { value: 'date', label: 'Sort by latest' },
+    { value: 'salary', label: 'Sort by salary' },
+  ];
 
   const sizes = {
     sm: 'px-2 py-1.5 text-sm min-h-[36px]',
@@ -56,13 +54,19 @@ const Dropdown: React.FC<DropdownProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (value !== undefined) {
+      setSelectedValue(value);
+    }
+  }, [value]);
+
   const handleSelect = (optionValue: string) => {
     setSelectedValue(optionValue);
     setIsOpen(false);
     onChange?.(optionValue);
   };
 
-  const selectedOption = options.find(option => option.value === selectedValue);
+  const selectedOption = sortOptions.find(option => option.value === selectedValue);
   const displayText = selectedOption ? selectedOption.label : placeholder;
 
   const DefaultRightIcon = () => (
@@ -114,12 +118,12 @@ const Dropdown: React.FC<DropdownProps> = ({
 
       {isOpen && !disabled && (
         <div className="absolute z-50 w-full mt-1 bg-white border border-border-primary rounded sm:rounded-md md:rounded-lg shadow-lg max-h-60 overflow-auto">
-          {options.length === 0 ? (
+          {sortOptions.length === 0 ? (
             <div className="px-3 py-2 text-secondary-dark text-sm">
               No options available
             </div>
           ) : (
-            options.map((option) => (
+            sortOptions.map((option) => (
               <button
                 key={option.value}
                 type="button"

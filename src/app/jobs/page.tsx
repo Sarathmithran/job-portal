@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import Dropdown from '@/components/ui/Dropdown';
 import CommonHeader from '@/components/common/CommonHeader';
@@ -9,38 +9,33 @@ import { TopCompany } from '@/components/jobs/TopCompany';
 import Pagination from '@/components/jobs/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
-import { useSearchParams } from 'next/navigation';
 import { getJobs } from '@/store/jobs/jobsThunk';
+import { useQueryParams } from '@/utils/useQueryParams';
 
 const Jobs: React.FC = () => {
+  const { getParam, setParam, searchParams } = useQueryParams();
   const dispatch = useDispatch<AppDispatch>();
-  const { jobs, total, page, loading } = useSelector(
-    (state: RootState) => state.jobs
-  );
+  const { jobs, total, page, loading } = useSelector((state: RootState) => state.jobs);
 
-  const searchParams = useSearchParams();
+  // get current value
+  const sort = getParam("sort_by") || "date";
 
   useEffect(() => {
     const filters = {
-      what: searchParams.get("what") || undefined,
-      where: searchParams.get("where") || undefined,
-      category: searchParams.get("category") || undefined,
-      salary_min: searchParams.get("salary_min")
-        ? Number(searchParams.get("salary_min"))
+      what: getParam("what") || undefined,
+      where: getParam("where") || undefined,
+      category: getParam("category") || undefined,
+      salary_min: getParam("salary_min")
+        ? Number(getParam("salary_min")!)
         : undefined,
-      full_time: searchParams.get("full_time") === "1",
-      page: Number(searchParams.get("page")) || 1,
+      full_time: getParam("full_time") === "1",
+      permanent: getParam("permanent") === "1",
+      sort_by: sort, // using helper instead of raw searchParams
+      page: Number(getParam("page")) || 1,
     };
+
     dispatch(getJobs(filters));
   }, [searchParams, dispatch]);
-
-  const [sortBy, setSortBy] = useState('latest');
-  const sortOptions = [
-    { value: 'latest', label: 'Sort by latest' },
-    { value: 'oldest', label: 'Sort by oldest' },
-    { value: 'salary-high', label: 'Salary: High to Low' },
-    { value: 'salary-low', label: 'Salary: Low to High' }
-  ];
   
   // Calculate showing text
   const itemsPerPage = 10; 
@@ -62,9 +57,8 @@ const Jobs: React.FC = () => {
               </p>
               <div className="w-full sm:w-auto min-w-[200px]">
                 <Dropdown
-                  options={sortOptions}
-                  value={sortBy}
-                  onChange={setSortBy}
+                value={sort}
+                onChange={(val) => setParam("sort_by", val)}
                   rightIcon={
                     <Image
                       src="/images/img_arrowdown.svg"
