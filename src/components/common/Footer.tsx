@@ -10,19 +10,18 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
   const [email, setEmail] = useState('');
 
   const companyLinks = [
+    { label: 'Home', href: '/' },
+    { label: 'Jobs', href: '/jobs' },
     { label: 'About Us', href: '/about' },
-    { label: 'Our Team', href: '/team' },
-    { label: 'Partners', href: '/partners' },
-    { label: 'For Candidates', href: '/candidates' },
-    { label: 'For Employers', href: '/employers' }
+    { label: 'Contact Us', href: '/contact' },
   ];
 
   const jobCategories = [
-    { label: 'Telecomunications', href: '/jobs?category=telecomunications' },
-    { label: 'Hotels & Tourism', href: '/jobs?category=tourism' },
-    { label: 'Construction', href: '/jobs?category=construction' },
-    { label: 'Education', href: '/jobs?category=education' },
-    { label: 'Financial Services', href: '/jobs?category=financial' }
+    { label: 'Accounting & Finance', href: '/jobs?category=accounting-finance-jobs' },
+    { label: 'IT Jobs', href: '/jobs?category=it-jobs' },
+    { label: 'Sales Jobs', href: '/jobs?category=sales-jobs' },
+    { label: 'HR & Recruitmen', href: '/jobs?category=hr-jobs' },
+    { label: 'Part Time', href: '/jobs?category=part-time-jobs' }
   ];
 
   const handleSubscribe = (e: React.FormEvent) => {
@@ -52,8 +51,8 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
                   Job Portal
                 </h2>
               </div>
-              <p className="text-base sm:text-lg lg:text-[20px] font-lexend font-semibold leading-6 sm:leading-7 lg:leading-8 text-[#ffffffcc] max-w-sm">
-                Quis enim pellentesque viverra tellus eget malesuada facilisis. Congue nibh vivamus aliquet nunc mauris dui nullam et.
+              <p className="text-base sm:text-lg lg:text-[14px] font-lexend font-semibold leading-6 sm:leading-7 lg:leading-8 text-[#ffffffcc] max-w-sm">
+                We make job searching easier by bringing you closer to the opportunities that truly match your skills and goals.
               </p>
             </div>
 
@@ -99,7 +98,7 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
                 Newsletter
               </h3>
               <p className="text-xs sm:text-sm lg:text-[14px] font-inter font-normal leading-3 sm:leading-4 text-[#ffffffcc] mb-4 lg:mb-[12px]">
-                Eu nunc pretium vitae platea. Non netus elementum vulputate
+                Subscribe to stay updated with the latest job opportunities and career tips.
               </p>
               <form onSubmit={handleSubscribe} className="space-y-3 lg:space-y-[12px]">
                 <input

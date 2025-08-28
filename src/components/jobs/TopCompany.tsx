@@ -15,7 +15,7 @@ export const TopCompany = () => {
       name: "Instagram",
       logo: "/images/img_icon.svg",
       description:
-        "Elit velit mauris aliquam est diam. Leo sagittis consectetur diam morbi erat",
+        "Connecting the world through creativity and community.",
       openJobs: "8 open jobs",
     },
     {
@@ -23,7 +23,7 @@ export const TopCompany = () => {
       name: "Tesla",
       logo: "/images/img_icon_bg_white_a700.svg",
       description:
-        "At pellentesque amet odio cras imperdiet nisl. Ac magna aliquet massa leo",
+        "Accelerating the world’s transition to sustainable energy.",
       openJobs: "18 open jobs",
     },
     {
@@ -31,7 +31,7 @@ export const TopCompany = () => {
       name: "McDonald's",
       logo: "/images/img_icon_white_a700.svg",
       description:
-        "Odio aliquet tellus tellus maecenas. Faucibus in viverra venenatis phasellus",
+        "Leading the quick-service restaurant industry with innovation and taste.",
       openJobs: "12 open jobs",
     },
     {
@@ -39,7 +39,7 @@ export const TopCompany = () => {
       name: "Apple",
       logo: "/images/img_icon_white_a700_60x60.svg",
       description:
-        "Et odio sem tellus ultrices posuere consequat. Tristique nascetur sapien",
+        "Innovating technology that shapes the world — from iPhone to Mac.",
       openJobs: "9 open jobs",
     },
   ];
@@ -53,8 +53,7 @@ export const TopCompany = () => {
             Top Company
           </h2>
           <p className="text-sm sm:text-base lg:text-[16px] font-figtree font-normal leading-4 sm:leading-5 text-black max-w-2xl mx-auto">
-            At eu lobortis pretium tincidunt amet lacus ut aenean aliquet.
-            Blandit a massa elementum
+            Discover leading employers offering great opportunities across industries.
           </p>
         </div>
         {/* Companies Grid */}
