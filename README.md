@@ -1,37 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Job Portal
 
-## Getting Started
+A modern **Job Portal** web application built with **Next.js 15.5.0**, **Redux Toolkit**, **Axios**, **Tailwind CSS**, and **TypeScript**.  
+It allows users to **search, filter, and explore job opportunities** with a clean and responsive UI inspired by a [Figma design system](https://www.figma.com/design/cdz6OKHCJypm1ff8TlvYWZ/Job-Portal-Figma-Template--Community-?node-id=25-5975).
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-Figma : https://www.figma.com/design/cdz6OKHCJypm1ff8TlvYWZ/Job-Portal-Figma-Template--Community-?node-id=25-5975&t=aoHs7YaDwfYFPmPm-0
+## 🚀 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 🔎 **Job Search & Filters** – Search jobs by keyword, category, and location  
+- 🏢 **Top Companies** – Highlighted companies with open job listings  
+- 📊 **Recent Jobs** – Displays the latest job postings dynamically  
+- 🌐 **Responsive Design** – Fully responsive using TailwindCSS  
+- ⚡ **State Management** – Powered by Redux Toolkit for predictable state handling  
+- 🔗 **API Integration** – Axios used for fetching jobs data  
+- 🎨 **Modern UI** – Based on Figma design system  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Tech Stack
 
-## Learn More
+- [Next.js 15.5.0](https://nextjs.org/) – React framework for SSR & routing  
+- [Redux Toolkit](https://redux-toolkit.js.org/) – State management  
+- [Axios](https://axios-http.com/) – HTTP client  
+- [TailwindCSS](https://tailwindcss.com/) – Utility-first CSS framework  
+- [TypeScript](https://www.typescriptlang.org/) – Type safety  
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ⚙️ Installation & Setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Clone the repository  
+   ```bash
+   git clone https://github.com/Sarathmithran/job-portal.git
+   cd job-portal
+   ```
 
-## Deploy on Vercel
+2. Install dependencies  
+   ```bash
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Run development server  
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Open in browser → [http://localhost:3000](http://localhost:3000)  
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!  
+
+1. Fork the repo  
+2. Create a feature branch → `git checkout -b feature-name`  
+3. Commit changes → `git commit -m "Added feature"`  
+4. Push to branch → `git push origin feature-name`  
+5. Open a Pull Request  
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License** – free to use and modify.  

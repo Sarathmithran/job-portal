@@ -1,7 +1,7 @@
 import axiosInstance from "@/services/api";
 
 export const fetchRecentJobs = () =>
-  axiosInstance.get(`/search/1`, {
+  axiosInstance.get(`/search/1?sort_by=date`, {
     params: { results_per_page: 5 },
 });
 
