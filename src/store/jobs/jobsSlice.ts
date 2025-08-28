@@ -16,7 +16,7 @@ const initialState: JobsState = {
   recentJobs: [],
   total: 0,
   page: 1,
-  loading: false,
+  loading: true,
   error: null,
 };
 

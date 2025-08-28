@@ -8,8 +8,11 @@ import { useQueryParams } from "@/utils/useQueryParams";
 import Button from "../ui/Button";
 import { categories } from "@/data/categories";
 import { locationOptions } from "@/data/locations";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const Filter = () => {
+  const { loading } = useSelector((state: RootState) => state.jobs);
   const { getParam, setParam } = useQueryParams();
   const [searchQuery, setSearchQuery] = useState(getParam("what"));
 
@@ -29,10 +32,11 @@ const Filter = () => {
             placeholder="Job title or company"
             value={searchQuery ?? ""}
             onChange={setSearchQuery}
-            // rightIcon="/images/img_search_gray_600.svg"
+            disabled={loading}
             className="w-full"
           />
           <Button
+            disabled={loading}
             onClick={() => setParam("what", searchQuery ?? "")}
             className="w-full mt-2 py-2 sm:py-2.5 lg:py-[8px] text-sm sm:text-base lg:text-[16px] font-figtree font-semibold leading-4 sm:leading-5 text-white bg-[#309589] hover:bg-[#267a6f] rounded-lg transition-all duration-200"
           >
@@ -48,6 +52,7 @@ const Filter = () => {
             options={locationOptions}
             placeholder="Choose city"
             value={location}
+            disabled={loading}
             onChange={(val) => setParam("where", val)}
             rightIcon={
               <Image
@@ -67,6 +72,7 @@ const Filter = () => {
           <Dropdown
             options={categories}
             placeholder="Choose category"
+            disabled={loading}
             value={category}
             onChange={(val) => setParam("category", val)}
             rightIcon={
@@ -91,6 +97,7 @@ const Filter = () => {
                 <label className="flex items-center gap-2 lg:gap-[8px] cursor-pointer">
                   <input
                     type="checkbox"
+                    disabled={loading}
                     checked={getParam("full_time") === "1"}
                     onChange={(e) =>
                       setParam("full_time", e.target.checked ? "1" : '')
@@ -108,6 +115,7 @@ const Filter = () => {
                 <label className="flex items-center gap-2 lg:gap-[8px] cursor-pointer">
                   <input
                     type="checkbox"
+                    disabled={loading}
                     checked={getParam("permanent") === "1"}
                     onChange={(e) =>
                       setParam("permanent", e.target.checked ? "1" : '')

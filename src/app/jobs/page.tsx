@@ -5,16 +5,21 @@ import Dropdown from '@/components/ui/Dropdown';
 import CommonHeader from '@/components/common/CommonHeader';
 import Filter from '@/components/jobs/Filter';
 import Card from '@/components/jobs/Card';
-import { TopCompany } from '@/components/jobs/TopCompany';
+import CardSkeleton from '@/components/skeletons/CardSkelton';
+import NoJobsFound from '@/components/jobs/NoJobsFound';
 import Pagination from '@/components/jobs/Pagination';
+import { TopCompany } from '@/components/jobs/TopCompany';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
 import { getJobs } from '@/store/jobs/jobsThunk';
 import { useQueryParams } from '@/utils/useQueryParams';
+import { sortOptions } from '@/data/sortOptions';
+import { useRouter } from 'next/navigation';
 
 const Jobs: React.FC = () => {
   const { getParam, setParam, searchParams } = useQueryParams();
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
   const { jobs, total, page, loading } = useSelector((state: RootState) => state.jobs);
 
   // get current value
@@ -36,16 +41,15 @@ const Jobs: React.FC = () => {
 
     dispatch(getJobs(filters));
   }, [searchParams, dispatch]);
-
-  const sortOptions = [
-    { value: 'date', label: 'Sort by latest' },
-    { value: 'salary', label: 'Sort by salary' },
-  ];
   
   // Calculate showing text
-  const itemsPerPage = 10; 
+  const itemsPerPage = 8; 
   const startItem = (page - 1) * itemsPerPage + 1;
   const endItem = Math.min(page * itemsPerPage, total);
+
+  const onClearFilters = () => {
+    router.push("/jobs");
+  }
   
   return (
     <div className="w-full bg-gray-50">
@@ -63,6 +67,7 @@ const Jobs: React.FC = () => {
               <div className="w-full sm:w-auto min-w-[200px]">
                 <Dropdown
                 options={sortOptions}
+                disabled={loading}
                 value={sort}
                 onChange={(val) => setParam("sort_by", val)}
                   rightIcon={
@@ -78,15 +83,21 @@ const Jobs: React.FC = () => {
             </div>
             {/* Job Listings */}
             <div className="space-y-6 lg:space-y-[24px] mb-8 lg:mb-[40px]">
-              {jobs.map((job) => (
-                <Card key={job?.id} job={job}/>
-              ))}
+              {loading ? <CardSkeleton /> : jobs.length > 0 ? (
+                jobs.map((job) => (
+                  <Card key={job?.id} job={job} />
+                ))
+              ) : (
+                <NoJobsFound onClearFilters={onClearFilters} />
+              )}
             </div>
-            <Pagination 
-              currentPage={page} 
-              totalItems={total} 
-              itemsPerPage={itemsPerPage} 
-            />
+            { !loading && (
+              <Pagination 
+                currentPage={page} 
+                totalItems={total} 
+                itemsPerPage={itemsPerPage} 
+              />
+            )}
           </div>
         </div>
       </main>

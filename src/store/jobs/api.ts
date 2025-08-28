@@ -16,7 +16,7 @@ export const fetchJobs = (params: {
 }) =>
   axiosInstance.get(`/search/${params.page || 1}`, {
     params: {
-      results_per_page: 10,
+      results_per_page: 8,
       what: params.what,
       where: params.where,
       category: params.category,

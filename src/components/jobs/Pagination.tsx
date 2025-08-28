@@ -60,7 +60,7 @@ const Pagination: React.FC<PaginationProps> = ({
           className={`flex items-center gap-1 sm:gap-2 lg:gap-[4px] px-3 sm:px-4 lg:px-[16px] py-1.5 sm:py-2.5 lg:py-[6px] text-base sm:text-xl lg:text-[20px] font-figtree font-medium ${
             currentPage === 1 
               ? 'text-gray-400 cursor-not-allowed' 
-              : 'text-[#6c757d] hover:bg-[#6c757d] hover:text-white'
+              : 'text-[#6c757d] hover:bg-[#bdbec0] hover:text-white'
           } bg-transparent border-2 border-[#6c757d] rounded-lg transition-all duration-200`}
         >
           <Image
@@ -95,7 +95,7 @@ const Pagination: React.FC<PaginationProps> = ({
           className={`flex items-center gap-1 sm:gap-2 lg:gap-[4px] px-3 sm:px-4 lg:px-[16px] py-1.5 sm:py-2.5 lg:py-[6px] text-base sm:text-xl lg:text-[20px] font-figtree font-medium ${
             currentPage === totalPages
               ? 'text-gray-400 cursor-not-allowed' 
-              : 'text-[#6c757d] hover:bg-[#6c757d] hover:text-white'
+              : 'text-[#6c757d] hover:bg-[#bdbec0] hover:text-white'
           } bg-transparent border-2 border-[#6c757d] rounded-lg transition-all duration-200`}
         >
           <span className="hidden xs:inline">Next</span>

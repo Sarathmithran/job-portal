@@ -5,13 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/store/store';
 import { RootState } from '@/store/store';
 import { getRecentJobs } from '@/store/jobs/jobsThunk';
+import CardSkeleton from '../skeletons/CardSkelton';
 
 const RecentJobs = () => {
-
   const dispatch = useDispatch<AppDispatch>();
-  const { recentJobs } = useSelector(
-    (state: RootState) => state.jobs
-  );
+  const { recentJobs, loading } = useSelector((state: RootState) => state.jobs);
 
   useEffect(() => {
     dispatch(getRecentJobs());
@@ -24,11 +22,11 @@ const RecentJobs = () => {
             Recent Jobs Available
           </h1>
           <p className="text-sm sm:text-base text-gray-400 max-w-xl mx-auto sm:mx-0">
-            At eu lobortis pretium tincidunt amet lacus ut aenean aliquet
+            Find your next career move from the most recent listings
           </p>
         </div>
         <div className="space-y-6 lg:space-y-[24px] mb-8 lg:mb-[40px]">
-            {Array.isArray(recentJobs) && recentJobs.map((job) => (
+            {loading ? <CardSkeleton /> : recentJobs.map((job) => (
                 <Card key={job?.id} job={job}/>
             ))}        
         </div>
