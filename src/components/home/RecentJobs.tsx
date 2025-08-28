@@ -27,7 +27,7 @@ const RecentJobs = () => {
         </div>
         <div className="space-y-6 lg:space-y-[24px] mb-8 lg:mb-[40px]">
             {loading ? <CardSkeleton /> : recentJobs.map((job) => (
-                <Card key={job?.id} job={job}/>
+                <Card key={job?.id} job={job} type="recent" />
             ))}        
         </div>
     </div>

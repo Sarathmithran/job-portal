@@ -54,7 +54,7 @@ const Jobs: React.FC = () => {
   return (
     <div className="w-full bg-gray-50">
       {/* Header */}
-      <CommonHeader />
+      <CommonHeader title='Jobs' />
       <main className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-[72px] py-12 sm:py-16 lg:py-[60px]">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-[16px]">
           <Filter />
@@ -85,7 +85,7 @@ const Jobs: React.FC = () => {
             <div className="space-y-6 lg:space-y-[24px] mb-8 lg:mb-[40px]">
               {loading ? <CardSkeleton /> : jobs.length > 0 ? (
                 jobs.map((job) => (
-                  <Card key={job?.id} job={job} />
+                  <Card key={job?.id} job={job} type='list'/>
                 ))
               ) : (
                 <NoJobsFound onClearFilters={onClearFilters} />

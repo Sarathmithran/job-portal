@@ -2,8 +2,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import Button from '../ui/Button'
+interface CommonHeaderProps {
+  title: string;
+}
 
-const CommonHeader = () => {
+const CommonHeader: React.FC<CommonHeaderProps> = ({ title }) => {
   return (
     <header className="w-full bg-black relative">
         <div 
@@ -71,7 +74,7 @@ const CommonHeader = () => {
             {/* Page Title */}
             <div className="text-center pb-12 sm:pb-16 lg:pb-[118px]">
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[60px] font-figtree font-bold leading-tight sm:leading-snug lg:leading-[72px] text-white">
-                Jobs
+                {title}
               </h1>
             </div>
           </div>

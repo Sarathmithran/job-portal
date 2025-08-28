@@ -12,4 +12,9 @@ export interface Job {
   // optional custom fields
   logo?: string;
   timeAgo?: string;
+  contract_type?: string;
+  description?: string;
+  latitude?: number;
+  longitude?: number;
+  salary_is_predicted?: string;
 }

@@ -2,8 +2,14 @@ import React from "react";
 import Button from "../ui/Button";
 import Image from "next/image";
 import { Job } from "@/types/job";
+import { useRouter } from "next/navigation";
+interface CardProps {
+  job: Job;
+  type: string;
+}
 
-const Card = ({ job }: { job: Job }) => {
+const Card = ({ job, type }: CardProps) => {
+  const router = useRouter();
   return (
     <div
       key={job?.id}
@@ -93,7 +99,9 @@ const Card = ({ job }: { job: Job }) => {
             </span>
           </div>
         </div>
-        <Button className="px-4 sm:px-5 lg:px-[20px] py-2 sm:py-2.5 lg:py-[8px] text-sm sm:text-base lg:text-[16px] font-figtree font-semibold text-white bg-[#309589] hover:bg-[#267a6f] rounded-lg transition-all duration-200">
+        <Button className="px-4 sm:px-5 lg:px-[20px] py-2 sm:py-2.5 lg:py-[8px] text-sm sm:text-base lg:text-[16px] font-figtree font-semibold text-white bg-[#309589] hover:bg-[#267a6f] rounded-lg transition-all duration-200"
+        onClick={() => router.push(`/jobs/${job?.id}`)}
+        >
           Job Details
         </Button>
       </div>
