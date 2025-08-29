@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface FooterProps {
   className?: string;
@@ -63,13 +64,13 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
               </h3>
               <nav className="space-y-1 lg:space-y-1">
                 {companyLinks.map((link) => (
-                  <a
+                  <Link
                     key={link.label}
                     href={link.href}
                     className="block text-sm sm:text-base lg:text-[16px] font-inter font-normal leading-4 sm:leading-5 text-white hover:text-[#ffffffcc] transition-colors duration-200"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </div>
@@ -81,13 +82,13 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
               </h3>
               <nav className="space-y-1 lg:space-y-1">
                 {jobCategories.map((category) => (
-                  <a
+                  <Link
                     key={category.label}
                     href={category.href}
                     className="block text-sm sm:text-base lg:text-[16px] font-inter font-normal leading-4 sm:leading-5 text-white hover:text-[#ffffffcc] transition-colors duration-200"
                   >
                     {category.label}
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </div>
@@ -125,18 +126,18 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
               © Copyright Job Portal {new Date().getFullYear()}
             </p>        
             <div className="flex items-center gap-4 sm:gap-5 lg:gap-[20px]">
-              <a
+              <Link
                 href="/privacy"
                 className="text-sm sm:text-base lg:text-[16px] font-inter font-normal leading-4 sm:leading-5 text-white hover:text-[#ffffffcc] underline transition-colors duration-200"
               >
                 Privacy Policy
-              </a>
-              <a
+              </Link>
+              <Link 
                 href="/terms"
                 className="text-sm sm:text-base lg:text-[16px] font-inter font-normal leading-4 sm:leading-5 text-white hover:text-[#ffffffcc] underline transition-colors duration-200"
               >
                 Terms & Conditions
-              </a>
+              </Link>
             </div>
           </div>
         </div>

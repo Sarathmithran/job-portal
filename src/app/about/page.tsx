@@ -9,7 +9,7 @@ const About: React.FC = () => {
       <div className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="bg-white rounded-2xl p-8 shadow-sm">
+            <div className="bg-white rounded-2xl p-8 inset-shadow-sm inset-shadow-teal-100">
               <div className="w-12 h-12 bg-teal-100 text-teal-600 rounded-lg flex items-center justify-center mb-6">
                 <Image src="/images/img_target.svg" alt="target" width={24} height={24} />
               </div>
@@ -21,7 +21,7 @@ const About: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-sm">
+            <div className="bg-white rounded-2xl p-8 inset-shadow-sm inset-shadow-teal-100">
               <div className="w-12 h-12 bg-teal-100 text-teal-600 rounded-lg flex items-center justify-center mb-6">
                 <Image src="/images/img_star.svg" alt="star" width={24} height={24} />
               </div>
@@ -69,7 +69,7 @@ const About: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white rounded-xl p-6 shadow-sm text-center">
+            <div className="bg-white rounded-xl p-6 inset-shadow-sm inset-shadow-teal-100 text-center">
               <div className="w-16 h-16 bg-teal-100 text-teal-600 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <Image src="/images/img_team.svg" alt="team" width={24} height={24} />
               </div>
@@ -77,7 +77,7 @@ const About: React.FC = () => {
               <p className="text-gray-600">We believe in the power of working together to achieve extraordinary results.</p>
             </div>
 
-            <div className="bg-white rounded-xl p-6 shadow-sm text-center">
+            <div className="bg-white rounded-xl p-6 inset-shadow-sm inset-shadow-teal-100 text-center">
               <div className="w-16 h-16 bg-teal-100 text-teal-600 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <Image src="/images/img_star.svg" alt="star" width={24} height={24} />
               </div>
@@ -85,7 +85,7 @@ const About: React.FC = () => {
               <p className="text-gray-600">We strive for excellence in everything we do, setting high standards for ourselves.</p>
             </div>
 
-            <div className="bg-white rounded-xl p-6 shadow-sm text-center">
+            <div className="bg-white rounded-xl p-6 inset-shadow-sm inset-shadow-teal-100 text-center">
               <div className="w-16 h-16 bg-teal-100 text-teal-600 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <Image src="/images/img_target.svg" alt="target" width={24} height={24} />
               </div>
