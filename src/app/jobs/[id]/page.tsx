@@ -4,13 +4,14 @@ import { RootState } from '@/store/store';
 import { Job } from '@/types/job';
 import { extractResponsibilities } from '@/utils/parseDescription';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useSelector } from 'react-redux';
 
 const JobDetailsPage: React.FC = () => {
-    const { jobs } = useSelector((state: RootState) => state.jobs);
+    const { jobs, recentJobs } = useSelector((state: RootState) => state.jobs);
     const { id } = useParams();
-    const job: Job | undefined = jobs.find(j => j.id === id);
+    const job: Job | undefined =  jobs.find((j) => j.id === id) || recentJobs.find((j) => j.id === id);
 
     const responsibilities = extractResponsibilities(job?.description);
 
@@ -140,9 +141,9 @@ const JobDetailsPage: React.FC = () => {
             <div className="bg-white rounded-lg shadow-md p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Tags:</h3>
               <div className="flex flex-wrap gap-2">
-                  <a href={`/jobs?category=${job?.category?.tag}`} className="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-sm font-medium">
+                  <Link href={`/jobs?category=${job?.category?.tag}`} className="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-sm font-medium">
                     {job?.category?.tag}
-                  </a>
+                  </Link>
               </div>
             </div>
             
