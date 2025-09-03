@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
 import { login } from '@/store/auth/authThunk';
+import { useRouter } from 'next/navigation';
 
 interface LoginFormData {
   email: string;
@@ -16,6 +17,7 @@ interface LoginFormData {
 }
 
 const Login: React.FC = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -23,10 +25,14 @@ const Login: React.FC = () => {
   });
   const { loading } = useSelector((state: RootState) => state.auth);
 
-  const onSubmit = (data: LoginFormData) => {
-    dispatch(login(data));
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      await dispatch(login(data)).unwrap();
+      router.push("/"); // redirect to home after login
+    } catch {
+      alert('Login failed');
+    }
   };
-
 
   return (
     <>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
+import NavMenu from "./NavMenu";
 
 interface CommonHeaderProps {
   title: string;
@@ -63,19 +64,7 @@ const CommonHeader: React.FC<CommonHeaderProps> = ({ title }) => {
             </div>
 
             {/* Auth Buttons */}
-            <div className="flex items-center gap-3 sm:gap-4 lg:gap-[20px]">
-              <Link
-                href="/login"
-                className="text-sm sm:text-base lg:text-[16px] font-figtree font-semibold leading-4 sm:leading-5 text-white hover:text-[#ffffff99] transition-colors duration-200"
-              >
-                Login
-              </Link>
-              <Link 
-              href="/register"
-              className="px-4 sm:px-5 lg:px-[20px] py-2 sm:py-2.5 lg:py-[8px] text-sm sm:text-base lg:text-[16px] font-figtree font-semibold leading-4 sm:leading-5 text-white bg-[#309589] hover:bg-[#267a6f] rounded-lg transition-all duration-200">
-                Register
-              </Link>
-            </div>
+            <NavMenu />
           </nav>
 
           {/* Page Title */}

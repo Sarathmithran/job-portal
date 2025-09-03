@@ -1,5 +1,6 @@
 "use client"
 import CommonHeader from '@/components/common/CommonHeader';
+import { useAuth } from '@/hooks/useAuth';
 import { RootState } from '@/store/store';
 import { Job } from '@/types/job';
 import { extractResponsibilities } from '@/utils/parseDescription';
@@ -9,6 +10,7 @@ import { useParams } from 'next/navigation';
 import { useSelector } from 'react-redux';
 
 const JobDetailsPage: React.FC = () => {
+    const { isLoggedIn } = useAuth();
     const { jobs, recentJobs } = useSelector((state: RootState) => state.jobs);
     const { id } = useParams();
     const job: Job | undefined =  jobs.find((j) => j.id === id) || recentJobs.find((j) => j.id === id);
@@ -148,22 +150,31 @@ const JobDetailsPage: React.FC = () => {
             </div>
             
             <div className="bg-white rounded-lg shadow-md p-6 mt-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-3">
-                    Interested in this role?
-                </h2>
-                <p className="text-sm text-gray-600 mb-4">
-                    You can view the full details and apply directly on the employer&apos;s site.
-                </p>
-                {job?.redirect_url && (
-                    <a
-                    href={job.redirect_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full text-center inline-block bg-[#309589] hover:bg-[#267a6f] text-white font-medium py-2 px-4 rounded-lg transition"
+              <h2 className="text-lg font-semibold text-gray-900 mb-3">
+                Interested in this role?
+              </h2>
+              <p className="text-sm text-gray-600 mb-4">
+                You can view the full details and apply directly on the employer&apos;s site.
+              </p>
+
+              {job?.redirect_url && (
+                <>
+                  {isLoggedIn ? (
+                    <Link
+                      href={job.redirect_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full text-center inline-block bg-[#309589] hover:bg-[#267a6f] text-white font-medium py-2 px-4 rounded-lg transition"
                     >
-                    View Original Job Post
-                    </a>
-                )}
+                      View Original Job Post
+                    </Link>
+                  ) : (
+                    <p className="text-sm text-red-600 font-medium">
+                      Please <Link href="/login" className="text-[#309589] hover:text-[#267a6f]">Login</Link> to view the job post.
+                    </p>
+                  )}
+                </>
+              )}
             </div>
           </div>
         </div>

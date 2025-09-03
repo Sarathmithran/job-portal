@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import NavMenu from './NavMenu';
 
 interface HeaderProps {
   className?: string;
@@ -64,22 +65,7 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
           </nav>
 
           {/* Auth Buttons - Desktop */}
-          <div className="hidden lg:flex items-center gap-3 xl:gap-4">
-            <Link
-              href="/login"
-              className="text-sm xl:text-[16px] font-figtree font-medium leading-5 text-white hover:text-[#ffffff99] transition-colors duration-200"
-              role="menuitem"
-            >
-              Login
-            </Link>
-            <Link
-              href="/register"
-              className="text-sm xl:text-[16px] font-figtree font-semibold leading-5 text-white bg-[#309589] hover:bg-[#267a6f] px-4 xl:px-[20px] py-2 xl:py-[8px] rounded-lg transition-all duration-200 hover:scale-105 active:scale-95 capitalize"
-              role="menuitem"
-            >
-              Register
-            </Link>
-          </div>
+          <NavMenu />
 
           {/* Mobile Menu */}
           <nav className={`${menuOpen ? 'block' : 'hidden'} lg:hidden absolute top-full left-0 w-full bg-[#309589] border-t border-[#267a6f] z-50`}>

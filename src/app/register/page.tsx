@@ -3,6 +3,13 @@ import React, { useState } from 'react';
 import { Eye, EyeOff, Mail, Lock, User, ArrowRight } from 'lucide-react';
 import CommonHeader from '@/components/common/CommonHeader';
 import Link from 'next/link';
+import { registerSchema } from '@/validation/authSchema';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { AppDispatch, RootState } from '@/store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '@/store/auth/authThunk';
+import { useRouter } from 'next/navigation';
 
 interface RegisterFormData {
   name: string;
@@ -12,60 +19,22 @@ interface RegisterFormData {
 }
 
 const Register: React.FC = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [formData, setFormData] = useState<RegisterFormData>({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+  const dispatch = useDispatch<AppDispatch>();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(registerSchema)
   });
-  const [errors, setErrors] = useState<Partial<RegisterFormData>>({});
-  const [isLoading, setIsLoading] = useState(false);
+  const { loading } = useSelector((state: RootState) => state.auth);
 
-  const validateForm = (): boolean => {
-    const newErrors: Partial<RegisterFormData> = {};
-
-    if (!formData.name || formData.name.trim().length < 2) {
-      newErrors.name = 'Name must be at least 2 characters';
+  const onSubmit = async (data: RegisterFormData) => {
+    try {
+      await dispatch(registerUser(data)).unwrap();
+      router.push("/"); // redirect after successful registration
+    } catch {
+      alert('Registration failed');
     }
-
-    if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-
-    if (!formData.password || formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    if (errors[name as keyof RegisterFormData]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
-    }
-  };
-
-  const handleSubmit = async () => {
-    if (!validateForm()) return;
-
-    setIsLoading(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    console.log('Register attempt:', formData);
-    
-    setIsLoading(false);
-    alert('Registration successful!');
   };
 
   return (
@@ -85,7 +54,7 @@ const Register: React.FC = () => {
 
         {/* Form Card */}
         <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
-          <div className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             {/* Name Field */}
             <div className="space-y-2">
               <label htmlFor="name" className="block text-sm font-semibold text-gray-700">
@@ -96,25 +65,14 @@ const Register: React.FC = () => {
                   <User className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className={`block w-full pl-12 pr-4 py-4 border rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300 ${
-                    errors.name 
-                      ? 'border-red-300 focus:ring-red-500 bg-red-50' 
-                      : 'border-gray-300 focus:ring-emerald-500 hover:border-gray-400 bg-gray-50 focus:bg-white'
-                  }`}
+                  {...register('name')}
+                  className="block w-full pl-12 pr-4 py-4 border rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300 border-gray-300 focus:ring-emerald-500 hover:border-gray-400 bg-gray-50 focus:bg-white"
                   placeholder="Enter your full name"
                 />
               </div>
-              {errors.name && (
-                <p className="text-red-600 text-sm flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-red-100 text-red-600 text-xs flex items-center justify-center font-bold">!</span>
-                  {errors.name}
+              <p className="text-red-500 text-sm ps-3">
+                  {errors?.name?.message}
                 </p>
-              )}
             </div>
 
             {/* Email Field */}
@@ -127,25 +85,14 @@ const Register: React.FC = () => {
                   <Mail className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className={`block w-full pl-12 pr-4 py-4 border rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300 ${
-                    errors.email 
-                      ? 'border-red-300 focus:ring-red-500 bg-red-50' 
-                      : 'border-gray-300 focus:ring-emerald-500 hover:border-gray-400 bg-gray-50 focus:bg-white'
-                  }`}
+                  {...register('email')}
+                  className="block w-full pl-12 pr-4 py-4 border rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300 border-gray-300 focus:ring-emerald-500 hover:border-gray-400 bg-gray-50 focus:bg-white"
                   placeholder="Enter your email address"
                 />
               </div>
-              {errors.email && (
-                <p className="text-red-600 text-sm flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-red-100 text-red-600 text-xs flex items-center justify-center font-bold">!</span>
-                  {errors.email}
+              <p className="text-red-500 text-sm ps-3">
+                  {errors?.email?.message}
                 </p>
-              )}
             </div>
 
             {/* Password Field */}
@@ -158,16 +105,9 @@ const Register: React.FC = () => {
                   <Lock className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
-                  id="password"
-                  name="password"
+                  {...register('password')}
                   type={showPassword ? 'text' : 'password'}
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  className={`block w-full pl-12 pr-12 py-4 border rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300 ${
-                    errors.password 
-                      ? 'border-red-300 focus:ring-red-500 bg-red-50' 
-                      : 'border-gray-300 focus:ring-emerald-500 hover:border-gray-400 bg-gray-50 focus:bg-white'
-                  }`}
+                  className="block w-full pl-12 pr-12 py-4 border rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300 border-gray-300 focus:ring-emerald-500 hover:border-gray-400 bg-gray-50 focus:bg-white"
                   placeholder="Create a password"
                 />
                 <button
@@ -178,12 +118,9 @@ const Register: React.FC = () => {
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
               </div>
-              {errors.password && (
-                <p className="text-red-600 text-sm flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-red-100 text-red-600 text-xs flex items-center justify-center font-bold">!</span>
-                  {errors.password}
+              <p className="text-red-500 text-sm ps-3">
+                  {errors?.password?.message}
                 </p>
-              )}
             </div>
 
             {/* Confirm Password Field */}
@@ -196,16 +133,9 @@ const Register: React.FC = () => {
                   <Lock className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
-                  id="confirmPassword"
-                  name="confirmPassword"
+                  {...register('confirmPassword')}
                   type={showConfirmPassword ? 'text' : 'password'}
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
-                  className={`block w-full pl-12 pr-12 py-4 border rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300 ${
-                    errors.confirmPassword 
-                      ? 'border-red-300 focus:ring-red-500 bg-red-50' 
-                      : 'border-gray-300 focus:ring-emerald-500 hover:border-gray-400 bg-gray-50 focus:bg-white'
-                  }`}
+                  className="block w-full pl-12 pr-12 py-4 border rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300 border-gray-300 focus:ring-emerald-500 hover:border-gray-400 bg-gray-50 focus:bg-white"
                   placeholder="Confirm your password"
                 />
                 <button
@@ -216,12 +146,9 @@ const Register: React.FC = () => {
                   {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
               </div>
-              {errors.confirmPassword && (
-                <p className="text-red-600 text-sm flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-red-100 text-red-600 text-xs flex items-center justify-center font-bold">!</span>
-                  {errors.confirmPassword}
+              <p className="text-red-500 text-sm ps-3">
+                  {errors?.confirmPassword?.message}
                 </p>
-              )}
             </div>
 
             {/* Terms Agreement */}
@@ -240,13 +167,12 @@ const Register: React.FC = () => {
 
             {/* Submit Button */}
             <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={isLoading}
+              type="submit"
+              disabled={loading}
               className="w-full cursor-pointer flex items-center justify-center gap-3 py-4 px-6 border border-transparent rounded-xl shadow-lg text-white font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 disabled:opacity-50 disabled:transform-none"
               style={{ backgroundColor: '#309689' }}
             >
-              {isLoading ? (
+              {loading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                   Creating Account...
@@ -258,7 +184,7 @@ const Register: React.FC = () => {
                 </>
               )}
             </button>
-          </div>
+          </form>
         </div>
 
         {/* Sign In Link */}

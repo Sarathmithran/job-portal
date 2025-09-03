@@ -3,7 +3,7 @@ import { auth } from "../../services/firebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 
 // Register user
-export const register = createAsyncThunk(
+export const registerUser = createAsyncThunk(
   "auth/register",
   async ({ name, email, password }: { name: string; email: string; password: string }, thunkAPI) => {
     try {
