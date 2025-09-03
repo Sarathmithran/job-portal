@@ -3,6 +3,12 @@ import React, { useState } from 'react';
 import { Eye, EyeOff, Mail, Lock, ArrowRight } from 'lucide-react';
 import CommonHeader from '@/components/common/CommonHeader';
 import Link from 'next/link';
+import { loginSchema } from '@/validation/authSchema';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/store/store';
+import { login } from '@/store/auth/authThunk';
 
 interface LoginFormData {
   email: string;
@@ -11,49 +17,16 @@ interface LoginFormData {
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState<LoginFormData>({
-    email: '',
-    password: ''
+  const dispatch = useDispatch<AppDispatch>();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(loginSchema)
   });
-  const [errors, setErrors] = useState<Partial<LoginFormData>>({});
-  const [isLoading, setIsLoading] = useState(false);
+  const { loading } = useSelector((state: RootState) => state.auth);
 
-  const validateForm = (): boolean => {
-    const newErrors: Partial<LoginFormData> = {};
-
-    if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-
-    if (!formData.password || formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const onSubmit = (data: LoginFormData) => {
+    dispatch(login(data));
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    if (errors[name as keyof LoginFormData]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
-    }
-  };
-
-  const handleSubmit = async () => {
-    if (!validateForm()) return;
-
-    setIsLoading(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    console.log('Login attempt:', formData);
-    
-    setIsLoading(false);
-    alert('Login successful!');
-  };
 
   return (
     <>
@@ -72,7 +45,7 @@ const Login: React.FC = () => {
 
         {/* Form Card */}
         <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
-          <div className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             {/* Email Field */}
             <div className="space-y-2">
               <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
@@ -83,25 +56,14 @@ const Login: React.FC = () => {
                   <Mail className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className={`block w-full pl-12 pr-4 py-4 border rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300 ${
-                    errors.email 
-                      ? 'border-red-300 focus:ring-red-500 bg-red-50' 
-                      : 'border-gray-300 focus:ring-emerald-500 hover:border-gray-400 bg-gray-50 focus:bg-white'
-                  }`}
+                  {...register('email')}
+                  className="block w-full pl-12 pr-4 py-4 border rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300 border-gray-300 focus:ring-emerald-500 hover:border-gray-400 bg-gray-50 focus:bg-white"
                   placeholder="Enter your email address"
                 />
               </div>
-              {errors.email && (
-                <p className="text-red-600 text-sm flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-red-100 text-red-600 text-xs flex items-center justify-center font-bold">!</span>
-                  {errors.email}
+                <p className="text-red-500 text-sm ps-3">
+                  {errors?.email?.message}
                 </p>
-              )}
             </div>
 
             {/* Password Field */}
@@ -114,16 +76,9 @@ const Login: React.FC = () => {
                   <Lock className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
-                  id="password"
-                  name="password"
                   type={showPassword ? 'text' : 'password'}
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  className={`block w-full pl-12 pr-12 py-4 border rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300 ${
-                    errors.password 
-                      ? 'border-red-300 focus:ring-red-500 bg-red-50' 
-                      : 'border-gray-300 focus:ring-emerald-500 hover:border-gray-400 bg-gray-50 focus:bg-white'
-                  }`}
+                  {...register('password')}
+                  className="block w-full pl-12 pr-12 py-4 border rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300 border-gray-300 focus:ring-emerald-500 hover:border-gray-400 bg-gray-50 focus:bg-white"
                   placeholder="Enter your password"
                 />
                 <button
@@ -134,12 +89,9 @@ const Login: React.FC = () => {
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
               </div>
-              {errors.password && (
-                <p className="text-red-600 text-sm flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-red-100 text-red-600 text-xs flex items-center justify-center font-bold">!</span>
-                  {errors.password}
+              <p className="text-red-500 text-sm ps-3">
+                  {errors?.password?.message}
                 </p>
-              )}
             </div>
 
             {/* Forgot Password Link */}
@@ -155,13 +107,12 @@ const Login: React.FC = () => {
 
             {/* Submit Button */}
             <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={isLoading}
+              type="submit"
+              disabled={loading}
               className="w-full cursor-pointer flex items-center justify-center gap-3 py-4 px-6 border border-transparent rounded-xl shadow-lg text-white font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 disabled:opacity-50 disabled:transform-none"
               style={{ backgroundColor: '#309689' }}
             >
-              {isLoading ? (
+              {loading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                   Signing In...
@@ -173,7 +124,7 @@ const Login: React.FC = () => {
                 </>
               )}
             </button>
-          </div>
+          </form>
         </div>
 
         {/* Sign Up Link */}
