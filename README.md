@@ -45,9 +45,9 @@ The UI is designed to be clean and fully responsive, inspired by a [Figma design
    npm install
    ```
 
-3. Add your Firebase config  
+3. Add your Adzuna & Firebase config  
    - Create a `.env.local` file in the project root  
-   - Add your Firebase credentials:  
+   - Add your Adzuna & Firebase credentials:  
      ```env
          NEXT_PUBLIC_ADZUNA_APP_ID=your_adzuna_app_id
          NEXT_PUBLIC_ADZUNA_APP_KEY=your_adzuna_app_key
