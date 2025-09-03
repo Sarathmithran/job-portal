@@ -40,7 +40,7 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12 lg:mb-[76px]">
             {/* Company Info */}
             <div className="lg:col-span-1">
-              <div className="flex items-center gap-2 sm:gap-[10px] mb-8 lg:mb-[38px]">
+              <Link href="/" className="flex items-center gap-2 sm:gap-[10px] mb-8 lg:mb-[38px]">
                 <Image
                   src="/images/img_check_1_1.svg"
                   alt="Job Portal Logo"
@@ -51,7 +51,7 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
                 <h2 className="text-lg sm:text-xl lg:text-[20px] font-inter font-semibold leading-5 sm:leading-6 text-white">
                   Job Portal
                 </h2>
-              </div>
+              </Link>
               <p className="text-base sm:text-lg lg:text-[14px] font-lexend font-semibold leading-6 sm:leading-7 lg:leading-8 text-[#ffffffcc] max-w-sm">
                 We make job searching easier by bringing you closer to the opportunities that truly match your skills and goals.
               </p>
