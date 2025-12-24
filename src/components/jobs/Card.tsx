@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../ui/Button";
 import Image from "next/image";
 import { Job } from "@/types/job";
@@ -10,6 +10,13 @@ interface CardProps {
 
 const Card = ({ job, type }: CardProps) => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = () => {
+    setLoading(true);
+    router.push(`/jobs/${job?.id}`);
+  };
+
   return (
     <div
       key={job?.id}
@@ -100,9 +107,9 @@ const Card = ({ job, type }: CardProps) => {
           </div>
         </div>
         <Button className="px-4 sm:px-5 lg:px-[20px] py-2 sm:py-2.5 lg:py-[8px] text-sm sm:text-base lg:text-[16px] font-figtree font-semibold text-white bg-[#309589] hover:bg-[#267a6f] rounded-lg transition-all duration-200"
-        onClick={() => router.push(`/jobs/${job?.id}`)}
+        onClick={handleClick}
         >
-          Job Details
+          {loading ? "Loading..." : "Job Details"}
         </Button>
       </div>
     </div>
